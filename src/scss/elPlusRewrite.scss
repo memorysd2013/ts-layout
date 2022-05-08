@@ -1,0 +1,76 @@
+/**
+ * Cover Element Plus Variable
+ */
+// 猜測使用 @use 故 scss 沒有載入順序, 所以這邊需要再引入一次 setting 來取得變數
+@use "src/scss/setting.scss" as *;
+
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': $mainC,
+    ),
+  ),
+);
+// 引入 theme-chalk/var 就能順利覆蓋變數 不需引入 index.scss
+// https://github.com/element-plus/element-plus/blob/dev/packages/theme-chalk/src/index.scss
+@import "element-plus/theme-chalk/src/var.scss";
+
+/**
+ * Custom Element Plus Component
+ */
+// el-tabs
+.el-tabs {
+  .el-tabs__header {
+    margin: 0;
+    .el-tabs__nav-wrap::after {
+      background-color: transparent;
+    }
+  }
+}
+
+@mixin el-tab-item-custom($property, $value) {
+  .el-tabs__header {
+    .el-tabs__nav-wrap {
+      .el-tabs__nav-scroll {
+        .el-tabs__nav {
+          .el-tabs__item {
+            #{$property}: $value;
+          }
+        }
+      }
+    }
+  }
+}
+
+// el-collapse
+.el-collapse {
+  border: none;
+  &.headrBorderBottom {
+    .el-collapse-item {
+      .el-collapse-item__wrap {
+        border-top: $borderS;
+      }
+    }
+  }
+  .el-collapse-item {
+    div .el-collapse-item__header {
+      border-bottom: none;
+    }
+    .el-collapse-item__wrap {
+      border-bottom: none;
+      .el-collapse-item__content {
+        padding: 1rem;
+      }
+    }
+  }
+}
+
+@mixin el-collapse-header-custom($property, $value) {
+  .el-collapse {
+    .el-collapse-item {
+      div .el-collapse-item__header {
+        #{$property}: $value;
+      }
+    }
+  }
+}
