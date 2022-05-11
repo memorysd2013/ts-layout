@@ -1,25 +1,23 @@
 <script setup lang="ts">
-import dayjs from 'dayjs'
-import { ref, computed, onMounted } from 'vue'
+import dayjs, { ManipulateType } from "dayjs";
+import { ref, computed, onMounted } from "vue";
 
+const props = defineProps<{ label: string; type?: ManipulateType; loading: boolean }>();
+const emits = defineEmits(["emitDate"]);
+const date = ref<number>();
 
-const props = defineProps<{ label: string, type: string, loading: boolean }>()
-const emits = defineEmits(['emitDate'])
-const date = ref<number>()
-
-const dateDisplay = computed(() => dayjs(date.value).format('MMMM D, YYYY'))
+const dateDisplay = computed(() => dayjs(date.value).format("MMMM D, YYYY"));
 
 onMounted(() => {
-  date.value = dayjs().valueOf()
-})
+  date.value = dayjs().valueOf();
+});
 
 const switchDate = (d: number) => {
   if (!props.loading) {
-    date.value = dayjs(date.value).add(d, props.type).valueOf()
-    emits('emitDate', date.value)
+    date.value = dayjs(date.value).add(d, props.type).valueOf();
+    emits("emitDate", date.value);
   }
-}
-
+};
 </script>
 
 <template lang="pug">
@@ -34,7 +32,7 @@ const switchDate = (d: number) => {
 
 <style lang="scss" scoped>
 .dateRangeSwitch {
-  padding: .5rem;
+  padding: 0.5rem;
   .icon {
     transition: all 0.2s;
     &:hover {

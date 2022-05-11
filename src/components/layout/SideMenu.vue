@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, computed, watch, onMounted, onUnmounted } from "vue";
-import { debounce } from "../../methods/index.ts";
+import { debounce } from "../../methods/"
 
 const menuCollapse = ref(false);
 

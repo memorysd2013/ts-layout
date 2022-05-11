@@ -6,7 +6,7 @@ import { debounce } from "../../methods";
 const props = defineProps<{ data: Array<number> }>();
 const barChart = ref<HTMLDivElement | any>();
 
-let resizeFn = null;
+let resizeFn: any = null;
 
 onMounted(() => {
   const { setOption, resize } = useBar(barChart.value, props.data);
