@@ -1,16 +1,23 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from 'vue'
 
-defineProps<{ label: string, icon: string, active: boolean }>()
+type Item = {
+  label: string,
+  icon: string,
+  active: boolean
+}
+
+defineProps<{ item: Item, collapse?: boolean }>()
 
 </script>
 
 <template lang="pug">
-.menu-item.flex.v-center.pointer(:class="{ active }")
-  i.icon.mr-8(v-if="icon" :class="icon")
+.menu-item.flex.v-center.pointer(:class="[item.active && 'active', collapse && 'collapse']")
+  i.icon.mr-8(v-if="item.icon" :class="item.icon")
   .placeholder(v-else)
-  span {{ label }}
+  span.menuLabel {{ item.label }}
   slot
+
 </template>
 
 <style lang="scss" scoped>
@@ -38,6 +45,12 @@ defineProps<{ label: string, icon: string, active: boolean }>()
 
   .placeholder {
     width: 2rem;
+  }
+
+  &.collapse {
+    .menuLabel {
+      display: none;
+    }
   }
 }
 </style>

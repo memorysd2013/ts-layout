@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import { ref, onMounted, markRaw } from "vue"
+import { ref, onMounted, markRaw } from "vue";
 // Vetur 會報錯 因為組件用 setup 包裝沒有 export
-import Stats from './components/feature/Stats.vue'
+import Stats from "./components/feature/Stats.vue";
 
-const component = ref<any>('')
+const component = ref<any>("");
 
-onMounted(async () => {
+onMounted(() => {
   // init
-  component.value = markRaw(Stats)
-})
-
+  component.value = markRaw(Stats);
+});
 </script>
 
 <template lang="pug">
 Header
 SideMenu
 component(:is="component")
-//- Stats
 Footer
 
 </template>
@@ -24,8 +22,13 @@ Footer
 <style lang="scss">
 #app {
   margin-top: $headerH;
-  margin-left: $sideMenuW;
   min-height: calc(100vh - $headerH);
+  margin-left: $sideMenuW;
   width: calc(100vw - $sideMenuW);
+
+  @include tablet {
+    margin-left: $sideMenuCollapseW;
+    width: calc(100vw - $sideMenuCollapseW);
+  }
 }
 </style>

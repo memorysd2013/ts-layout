@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 
-const DATA = reactive([
+defineProps<{ isCollapse: boolean }>()
+const emits = defineEmits(['update:isCollapse'])
+
+const menuLayout = reactive([
   { label: 'Home', icon: 'fa-solid fa-house', active: false },
   { label: 'Stats', icon: 'fa-solid fa-chart-simple', active: true },
   { label: 'Plan', icon: 'fa-solid fa-pen-to-square', active: false },
@@ -26,38 +29,37 @@ const DATA = reactive([
 
 const collapseModel = ref('')
 
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
 const menuOnClick = (item: { active: boolean, subMenu: Array<any> }) => {
-  DATA.forEach(d => d.active = false)
+  menuLayout.forEach(d => d.active = false)
   item.active = true
   if (item.subMenu) {
     item.subMenu.forEach(d => d.active = false)
   }
+  openSideMenu()
 }
+
 const subMenuOnClick = (parent: { subMenu: Array<any> }, item: { active: boolean }) => {
   parent.subMenu.forEach(d => d.active = false)
   item.active = true
+  openSideMenu()
 }
+
+const openSideMenu = () => emits('update:isCollapse', false)
 </script>
 
 <template lang="pug">
-.menu.flex.column
-  template(v-for="t in DATA")
+.menu.flex.column(:class="[isCollapse && 'collapse']")
+  template(v-for="t in menuLayout")
     template(v-if="t.subMenu")
-      MenuItem(:label="t.label" :icon="t.icon" :active="t.active" @click="menuOnClick(t)")
-        i.icon.fa-solid.fa-angle-right(:class="[t.active && 'rotate']")
+      MenuItem(:item="t" :collapse="isCollapse" @click="menuOnClick(t)")
+        i.icon.fa-solid.fa-angle-right(v-if="!isCollapse" :class="[t.active && 'rotate']")
       el-collapse-transition
-        .collapseContent(v-show="t.active")
+        .collapseContent(v-show="t.active && !isCollapse")
           template(v-for="s in t.subMenu")
-            MenuItem(:label="s.label" :icon="s.icon" :active="s.active" @click="subMenuOnClick(t, s)")
+            MenuItem(:item="s" @click="subMenuOnClick(t, s)")
 
     template(v-else)
-      MenuItem(:label="t.label" :icon="t.icon" :active="t.active" @click="menuOnClick(t)")
+      MenuItem(:item="t" :collapse="isCollapse" @click="menuOnClick(t)")
 
 </template>
 

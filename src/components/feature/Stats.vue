@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { ref, onMounted, reactive } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
+import { ElButtonGroup } from 'element-plus'
 
-const paramsTab = ref([
+const paramsTab = ref<Array<any>>([
   { label: 'Traffic', name: 'traffic' },
   { label: 'Insights', name: 'insights' },
 ])
-const paramsBtn = ref([
+const paramsBtn = ref<Array<any>>([
   { label: 'Days', value: 'd' },
   { label: 'Weeks', value: 'w' },
   { label: 'Months', value: 'M' },
   { label: 'Years', value: 'y' },
 ])
-const chartTab = ref([
+const chartTab = ref<Array<any>>([
   { label: 'Views', icon: 'fa-regular fa-heart', name: 'views' },
   { label: 'Vistors', icon: 'fa-regular fa-user', name: 'vistors' },
   { label: 'Likes', icon: 'fa-regular fa-star', name: 'likes' },
@@ -115,11 +116,29 @@ $paramsH: 50px;
     }
   }
 
+  @include tablet{
+    padding: 1rem .75rem;
+  }
+
   .paramsWrapper {
     border: $borderS;
     padding: 0 0.5rem;
     .paramsTabs {
       line-height: $paramsH;
+    }
+
+    @include tablet{
+      flex-direction: column;
+      padding: 0 0.5rem 0.5rem;
+
+      .el-button-group {
+        width: 100%;
+        padding-top: .5rem;
+
+        .el-button {
+          width: 25%;
+        }
+      }
     }
   }
 

@@ -16,5 +16,9 @@ defineProps<{ data: Array<any>, loading: boolean }>()
 .performanceCardList {
   grid-template-columns: 1fr 1fr;
   grid-gap: 1rem;
+
+  @include tablet{
+    grid-template-columns: 1fr;
+  }
 }
 </style>

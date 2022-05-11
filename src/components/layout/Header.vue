@@ -9,9 +9,7 @@ const DATA = [
 
 const activeName = ref('first')
 
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event)
-}
+const handleClick = (tab: TabsPaneContext, event: Event) => {}
 </script>
 
 <template lang="pug">

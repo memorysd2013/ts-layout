@@ -1,10 +1,15 @@
 $headerH: 50px;
 $headerZ: 2000;
 
-$sideMenuW: 300px;
-
 $mainC: #003bde;
 $mainHoverC: rgba($mainC, .2);
 
 $borderC: #ccc;
 $borderS: 2px solid $borderC;
+
+$tabletW: 768px;
+$mobileW: 425px;
+
+$sideMenuW: 280px;
+$sideMenuCollapseW: 60px;
+$sideMenuZ: 5000;
